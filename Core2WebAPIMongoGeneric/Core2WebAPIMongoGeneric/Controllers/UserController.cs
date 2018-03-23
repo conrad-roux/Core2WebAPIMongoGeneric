@@ -1,46 +1,53 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Core2WebAPIMongoGeneric.Models;
+using Core2WebAPIMongoGeneric.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace Core2WebAPIMongoGeneric.Controllers
 {
     [Produces("application/json")]
-    [Route("api/User")]
+    [Route("api/Users")]
     public class UserController : Controller
     {
-        // GET: api/User
+        UserService service = new UserService();
+
+        // GET: api/Users
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            return new string[] { "value1", "value2" };
+            return service.Get(x => true);
         }
 
-        // GET: api/User/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        // GET: api/Users/5
+        [HttpGet("{id}")]
+        public string Get(string id)
         {
-            return "value";
+            return service.GetById(x => x.Id == id);
         }
-        
-        // POST: api/User
+
+        // Create POST: api/Users
         [HttpPost]
-        public void Post([FromBody]string value)
+        public bool Post([FromBody]User user)
         {
+            service.Create(user);
+            return true;
         }
-        
-        // PUT: api/User/5
+
+        // update PUT: api/Users/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public bool Put(string id, [FromBody]User user)
         {
+            service.Update(id, user);
+            return true;
         }
-        
-        // DELETE: api/ApiWithActions/5
+
+        // DELETE: api/Users/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public bool Delete(string id)
         {
+            service.Delete(id);
+            return true;
         }
     }
 }
