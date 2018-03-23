@@ -17,8 +17,11 @@ Setup required
 Usage of the API is as follows:
 
 query all users -> (GET) http://localhost:port/api/users
+
 query a user by ID -> (GET) http://localhost:port/api/users/{userid from mongo}
+
 insert a user -> (POST) http://localhost:port/api/users     body = {"name" : "","email" : "","lastname" : ""}
+
 Delete a user by ID -> (DELETE) http://localhost:port/api/users/{userid from mongo}
 
 This project is licensed under the terms of the MIT license. See Licence file.
